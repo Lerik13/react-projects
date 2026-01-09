@@ -71,3 +71,5 @@ pnpm-debug.log*
 # (uncomment if needed)
 # =====================
 # **/.git/
+
+!.txt
