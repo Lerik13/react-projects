@@ -72,4 +72,4 @@ pnpm-debug.log*
 # =====================
 # **/.git/
 
-!.txt
+desc.txt

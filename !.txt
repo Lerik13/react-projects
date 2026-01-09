@@ -1,7 +1,0 @@
-Build 3 React Projects in 4 Hours | ReactJS Course For Beginners
-https://www.youtube.com/watch?v=r47C9c4qCqE
-https://github.com/machadop1407/3-react-projects
-
-1) Memory-card
-
-npx create-vite@latest
