@@ -1,5 +1,11 @@
+import { GameHeader } from './components/GameHeader'
+
 function App() {
-  return <>Memory Card App</>
+  return (
+    <div className='app'>
+      <GameHeader score={4} moves={10} />
+    </div>
+  )
 }
 
 export default App

@@ -27,3 +27,51 @@ body {
   align-items: center;
   gap: 30px;
 }
+
+.game-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  background: rgba(15, 23, 42, 0.9);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 600px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.game-header h1 {
+  font-size: 2.5rem;
+  color: #fff;
+  text-align: center;
+}
+
+.stats {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  width: 100%;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #a1a1aa;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #818cf8;
+}
