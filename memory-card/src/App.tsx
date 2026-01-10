@@ -42,6 +42,7 @@ function App() {
   const [matchedCards, setMatchedCards] = useState<number[]>([])
   const [score, setScore] = useState<number>(0)
   const [moves, setMoves] = useState<number>(0)
+  const [isLocked, setIsLocked] = useState<boolean>(false)
 
   const resetGame = (): void => {
     setCards(createCards)
@@ -49,11 +50,17 @@ function App() {
     setMoves(0)
     setFlippedCards([])
     setMatchedCards([])
+    setIsLocked(false)
   }
 
   const handleCardClick = (card: Cards) => {
     // Don't allow clicking if card is already flipped, matched
-    if (card.isFlipped || card.isMatched) {
+    if (
+      card.isFlipped ||
+      card.isMatched ||
+      isLocked ||
+      flippedCards.length === 2
+    ) {
       return
     }
 
@@ -75,6 +82,8 @@ function App() {
       const firstCard: Cards = cards[flippedCards[0]]
 
       if (firstCard.value === card.value) {
+        setIsLocked(true)
+
         setTimeout(() => {
           setMatchedCards((prev) => [...prev, firstCard.id, card.id])
 
@@ -90,10 +99,10 @@ function App() {
             })
           )
           setFlippedCards([])
+          setIsLocked(false)
         }, 500)
       } else {
         // flip back card 1, card 2
-
         setTimeout(() => {
           const flippedBackCard: Cards[] = newCards.map((c) => {
             if (newFlippedCards.includes(c.id) || c.id === card.id) {
@@ -105,6 +114,7 @@ function App() {
 
           setCards(flippedBackCard)
           setFlippedCards([])
+          setIsLocked(false)
         }, 1000)
       }
 
