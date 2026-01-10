@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Card } from './components/Card'
 import { GameHeader } from './components/GameHeader'
 
@@ -21,30 +21,96 @@ const cardValues: string[] = [
   '🍒',
 ]
 
-type Cards = {
+export type Cards = {
   id: number
   value: string
   isFlipped: boolean
   isMatched: boolean
 }
 
+const createCards = (): Cards[] =>
+  cardValues.map((value, index) => ({
+    id: index,
+    value,
+    isFlipped: false,
+    isMatched: false,
+  }))
+
 function App() {
-  const [cards, setCards] = useState<Cards[]>(() =>
-    cardValues.map((value, index) => ({
-      id: index,
-      value,
-      isFlipped: false,
-      isMatched: false,
-    }))
-  )
+  const [cards, setCards] = useState<Cards[]>(createCards)
+  const [flippedCards, setFlippedCards] = useState<number[]>([]) // tracking 2 cards, that are flipped
+  const [matchedCards, setMatchedCards] = useState<number[]>([])
+  const [score, setScore] = useState<number>(0)
+  const [moves, setMoves] = useState<number>(0)
+
+  const handleCardClick = (card: Cards) => {
+    // Don't allow clicking if card is already flipped, matched
+    if (card.isFlipped || card.isMatched) {
+      return
+    }
+
+    // Update card flipped state
+    const newCards: Cards[] = cards.map((c) => {
+      if (c.id === card.id) {
+        return { ...c, isFlipped: true }
+      } else {
+        return c
+      }
+    })
+    setCards(newCards)
+
+    const newFlippedCards: number[] = [...flippedCards, card.id]
+    setFlippedCards(newFlippedCards)
+
+    // Check for match if 2 cards are flipped
+    if (flippedCards.length === 1) {
+      const firstCard: Cards = cards[flippedCards[0]]
+
+      if (firstCard.value === card.value) {
+        setTimeout(() => {
+          setMatchedCards((prev) => [...prev, firstCard.id, card.id])
+
+          setScore((prev) => prev + 1)
+
+          setCards((prev) =>
+            prev.map((c) => {
+              if (c.id === card.id || c.id === firstCard.id) {
+                return { ...c, isMatched: true }
+              } else {
+                return c
+              }
+            })
+          )
+          setFlippedCards([])
+        }, 500)
+      } else {
+        // flip back card 1, card 2
+
+        setTimeout(() => {
+          const flippedBackCard: Cards[] = newCards.map((c) => {
+            if (newFlippedCards.includes(c.id) || c.id === card.id) {
+              return { ...c, isFlipped: false }
+            } else {
+              return c
+            }
+          })
+
+          setCards(flippedBackCard)
+          setFlippedCards([])
+        }, 1000)
+      }
+
+      setMoves((prev) => prev + 1)
+    }
+  }
 
   return (
     <div className='app'>
-      <GameHeader score={4} moves={10} />
+      <GameHeader score={score} moves={moves} />
 
       <div className='cards-grid'>
         {cards.map((card) => (
-          <Card card={card.value} />
+          <Card card={card} onClick={handleCardClick} />
         ))}
       </div>
     </div>

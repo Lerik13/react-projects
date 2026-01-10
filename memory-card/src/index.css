@@ -122,3 +122,31 @@ body {
   z-index: 0;
   border: 2px solid rgba(255, 255, 255, 0.1);
 }
+
+.card.flipped .card-front {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.9);
+}
+
+.card.flipped .card-back {
+  opacity: 1;
+}
+
+.card.matched {
+  pointer-events: none;
+}
+
+.card.matched .card-back {
+  background: rgba(126, 211, 33, 0.2);
+  box-shadow: 0 0 20px rgba(126, 211, 33, 0.4);
+  border: 2px solid rgba(126, 211, 33, 0.5);
+}
+
+.card:hover:not(.matched):not(.flipped) .card-front {
+  transform: scale(1.05);
+}
+
+.card:active:not(.matched) {
+  transform: scale(0.95);
+}
