@@ -28,15 +28,25 @@ export type Cards = {
   isMatched: boolean
 }
 
-const createCards = (): Cards[] =>
-  cardValues.map((value, index) => ({
-    id: index,
-    value,
-    isFlipped: false,
-    isMatched: false,
-  }))
+const shuffleArray = (array: string[]) => {
+  const shuffled: string[] = [...array]
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j: number = Math.floor(Math.random() * (i + 1))
+    ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+  return shuffled
+}
 
 function App() {
+  const createCards = (): Cards[] => {
+    return shuffleArray(cardValues).map((value, index) => ({
+      id: index,
+      value,
+      isFlipped: false,
+      isMatched: false,
+    }))
+  }
+
   const [cards, setCards] = useState<Cards[]>(createCards)
   const [flippedCards, setFlippedCards] = useState<number[]>([]) // tracking 2 cards, that are flipped
   const [matchedCards, setMatchedCards] = useState<number[]>([])
@@ -45,7 +55,7 @@ function App() {
   const [isLocked, setIsLocked] = useState<boolean>(false)
 
   const resetGame = (): void => {
-    setCards(createCards)
+    setCards(createCards())
     setScore(0)
     setMoves(0)
     setFlippedCards([])
