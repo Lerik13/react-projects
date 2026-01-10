@@ -43,6 +43,14 @@ function App() {
   const [score, setScore] = useState<number>(0)
   const [moves, setMoves] = useState<number>(0)
 
+  const resetGame = (): void => {
+    setCards(createCards)
+    setScore(0)
+    setMoves(0)
+    setFlippedCards([])
+    setMatchedCards([])
+  }
+
   const handleCardClick = (card: Cards) => {
     // Don't allow clicking if card is already flipped, matched
     if (card.isFlipped || card.isMatched) {
@@ -106,7 +114,7 @@ function App() {
 
   return (
     <div className='app'>
-      <GameHeader score={score} moves={moves} />
+      <GameHeader score={score} moves={moves} onReset={resetGame} />
 
       <div className='cards-grid'>
         {cards.map((card) => (

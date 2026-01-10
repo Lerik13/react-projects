@@ -1,9 +1,10 @@
 type Props = {
   score: number
   moves: number
+  onReset: React.MouseEventHandler
 }
 
-export const GameHeader = ({ score, moves }: Props) => {
+export const GameHeader = ({ score, moves, onReset }: Props) => {
   return (
     <div className='game-header'>
       <h1>🎮 Memory Card Game</h1>
@@ -17,6 +18,10 @@ export const GameHeader = ({ score, moves }: Props) => {
           <span className='stat-value'>{moves}</span>
         </div>
       </div>
+
+      <button className='reset-btn' onClick={onReset}>
+        New Game
+      </button>
     </div>
   )
 }
