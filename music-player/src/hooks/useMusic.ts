@@ -69,15 +69,57 @@ const songs: Song[] = [
 
 export const useMusic = () => {
   const [allSongs, setAllSongs] = useState<Song[]>(songs)
-  const [currentTrack, setCurrentTrack] = useState<Song | null>(null)
-  const [currentTrackIndex, setCurrentTrackIndex] = useState<number | null>(
-    null
-  )
+  const [currentTrack, setCurrentTrack] = useState<Song>(songs[0])
+  const [currentTrackIndex, setCurrentTrackIndex] = useState<number>(0)
+  const [currentTime, setCurrentTime] = useState<number>(0)
+  const [duration, setDuration] = useState<number>(0)
+  const [isPlaying, setIsPlaying] = useState<boolean>(false)
 
   const handlePlaySong = (song: Song, index: number) => {
     setCurrentTrack(song)
     setCurrentTrackIndex(index)
   }
 
-  return { allSongs, handlePlaySong, currentTrack, currentTrackIndex }
+  const nextTrack = () => {
+    setCurrentTrackIndex((prev) => {
+      const nextIndex = (prev + 1) % allSongs.length // if prev===allSongs.length => 1
+      setCurrentTrack(allSongs[nextIndex])
+      return nextIndex
+    })
+  }
+
+  const prevTrack = () => {
+    setCurrentTrackIndex((prev) => {
+      const nextIndex = prev === 0 ? allSongs.length - 1 : prev - 1
+      setCurrentTrack(allSongs[nextIndex])
+      return nextIndex
+    })
+  }
+
+  const play = () => setIsPlaying(true)
+  const pause = () => setIsPlaying(false)
+
+  const formatTime = (time: number) => {
+    const minutes = Math.floor(time / 60)
+    const seconds = Math.floor(time % 60)
+
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`
+  }
+
+  return {
+    allSongs,
+    handlePlaySong,
+    currentTrack,
+    currentTrackIndex,
+    currentTime,
+    setCurrentTime,
+    formatTime,
+    duration,
+    setDuration,
+    nextTrack,
+    prevTrack,
+    isPlaying,
+    play,
+    pause,
+  }
 }
