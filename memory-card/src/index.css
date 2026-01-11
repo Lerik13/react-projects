@@ -182,3 +182,49 @@ body {
 .card:active:not(.matched) {
   transform: scale(0.95);
 }
+
+@media (max-width: 768px) {
+  .game-header h1 {
+    font-size: 2rem;
+  }
+
+  .cards-grid {
+    gap: 10px;
+  }
+
+  .card-front,
+  .card-back {
+    font-size: 2.5rem;
+  }
+
+  .card-back {
+    font-size: 3rem;
+  }
+
+  .stats {
+    gap: 20px;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-header {
+    padding: 20px;
+  }
+
+  .game-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .card-front,
+  .card-back {
+    font-size: 2rem;
+  }
+
+  .card-back {
+    font-size: 2.5rem;
+  }
+}
