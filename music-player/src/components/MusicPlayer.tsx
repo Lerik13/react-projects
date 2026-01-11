@@ -37,16 +37,32 @@ export const MusicPlayer = () => {
       setDuration(audio.duration)
     }
 
-    const handleTimeUpdate = () => {}
+    const handleTimeUpdate = () => {
+      setCurrentTime(audio.currentTime)
+    }
 
-    const handleEnded = () => {}
+    const handleEnded = () => {
+      nextTrack()
+    }
 
     audio.addEventListener('loadedmetadata', handleLoadedMetadata)
+    audio.addEventListener('timeupdate', handleTimeUpdate)
+    audio.addEventListener('ended', handleEnded)
 
     return () => {
       audio.removeEventListener('loadedmetadata', handleLoadedMetadata)
+      audio.removeEventListener('timeupdate', handleTimeUpdate)
+      audio.removeEventListener('ended', handleEnded)
     }
   }, [setDuration, setCurrentTime, currentTrack])
+
+  const handleTimeChange = (e) => {
+    const audio = audioRef.current
+    if (!audio) return
+    const newTime = parseFloat(e.target.value)
+    audio.currentTime = newTime
+    setCurrentTime(newTime)
+  }
 
   return (
     <div className='music-player'>
@@ -71,6 +87,7 @@ export const MusicPlayer = () => {
           step='0.1'
           value={currentTime || 0}
           className='progress-bar'
+          onChange={handleTimeChange}
           style={{}}
         />
         <span className='time'>{formatTime(duration)}</span>
