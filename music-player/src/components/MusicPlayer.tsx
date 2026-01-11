@@ -14,6 +14,8 @@ export const MusicPlayer = () => {
     isPlaying,
     play,
     pause,
+    volume,
+    setVolume,
   } = useMusic()
 
   const audioRef = useRef<HTMLAudioElement | null>(null)
@@ -28,6 +30,13 @@ export const MusicPlayer = () => {
       audio.pause()
     }
   }, [isPlaying])
+
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio) return
+
+    audio.volume = volume
+  }, [volume])
 
   useEffect(() => {
     const audio = audioRef.current
@@ -56,12 +65,17 @@ export const MusicPlayer = () => {
     }
   }, [setDuration, setCurrentTime, currentTrack])
 
-  const handleTimeChange = (e) => {
+  const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const audio = audioRef.current
     if (!audio) return
     const newTime = parseFloat(e.target.value)
     audio.currentTime = newTime
     setCurrentTime(newTime)
+  }
+
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newVolume = parseFloat(e.target.value)
+    setVolume(newVolume)
   }
 
   return (
@@ -106,6 +120,19 @@ export const MusicPlayer = () => {
         <button className='control-btn' onClick={nextTrack}>
           ⏭
         </button>
+      </div>
+
+      <div className='volume-container'>
+        <div className='volume-icon'>🔊</div>
+        <input
+          type='range'
+          min='0'
+          max='1'
+          step='0.1'
+          className='volume-bar'
+          onChange={handleVolumeChange}
+          value={volume}
+        />
       </div>
     </div>
   )

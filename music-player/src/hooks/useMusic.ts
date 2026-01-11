@@ -74,6 +74,7 @@ export const useMusic = () => {
   const [currentTime, setCurrentTime] = useState<number>(0)
   const [duration, setDuration] = useState<number>(0)
   const [isPlaying, setIsPlaying] = useState<boolean>(false)
+  const [volume, setVolume] = useState<number>(0.5)
 
   const handlePlaySong = (song: Song, index: number) => {
     setCurrentTrack(song)
@@ -123,5 +124,7 @@ export const useMusic = () => {
     isPlaying,
     play,
     pause,
+    volume,
+    setVolume,
   }
 }
