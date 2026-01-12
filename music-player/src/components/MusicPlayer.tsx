@@ -78,6 +78,8 @@ export const MusicPlayer = () => {
     setVolume(newVolume)
   }
 
+  const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0
+
   return (
     <div className='music-player'>
       <audio
@@ -102,7 +104,7 @@ export const MusicPlayer = () => {
           value={currentTime || 0}
           className='progress-bar'
           onChange={handleTimeChange}
-          style={{}}
+          style={{ '--progress': `${progressPercentage}%` }}
         />
         <span className='time'>{formatTime(duration)}</span>
       </div>
