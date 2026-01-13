@@ -17,12 +17,13 @@ export const PlayList = () => {
     currentTrackIndex,
     handlePlaySong,
     deletePlaylist,
+    deleteSongFromPlaylist,
   } = useMusic()
 
   const filteredSongs = allSongs.filter((song) => {
     const matches =
-      song.title.toLowerCase().includes(searchQuery.toLocaleLowerCase()) ||
-      song.artist.toLowerCase().includes(searchQuery.toLocaleLowerCase())
+      song.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      song.artist.toLowerCase().includes(searchQuery.toLowerCase())
 
     const isAlreadyInPlaylist = selectedPlaylist?.songs.some(
       (playlistSong) => playlistSong.id === song.id
@@ -54,6 +55,16 @@ export const PlayList = () => {
   const deletePlaylistConfirmation = (playlist: Playlist) => {
     if (window.confirm(`Are you sure you want to delete "${playlist.name}"?`)) {
       deletePlaylist(playlist.id)
+    }
+  }
+
+  const deleteSongConfirmation = (playlist: Playlist, song: Song) => {
+    if (
+      window.confirm(
+        `Are you sure you want to delete song "${song.title}" from "${playlist.name}"?`
+      )
+    ) {
+      deleteSongFromPlaylist(playlist.id, song.id)
     }
   }
 
@@ -158,6 +169,14 @@ export const PlayList = () => {
                         <span className='song-artist'>{song.artist}</span>
                       </div>
                       <span className='song-duration'>{song.duration}</span>
+                      <div className='song-delete-btn'>
+                        <button
+                          className='delete-playlist-btn'
+                          onClick={() => deleteSongConfirmation(playlist, song)}
+                        >
+                          X
+                        </button>
+                      </div>
                     </div>
                   ))
                 )}

@@ -207,6 +207,9 @@ body {
   font-weight: 500;
 }
 
+.song-delete-btn {
+  margin-left: 0.5rem;
+}
 .play-button {
   font-size: 1.2rem;
   color: rgba(255, 255, 255, 0.8);
