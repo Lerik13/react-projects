@@ -93,6 +93,7 @@ interface MusicContextValue {
   playlists: Playlist[]
   createPlaylist: (name: string) => void
   addSongToPlaylist: (playlistId: number, song: Song) => void
+  deletePlaylist: (playlistId: number) => void
 }
 
 const MusicContext = createContext<MusicContextValue | undefined>(undefined)
@@ -145,6 +146,12 @@ export const MusicProvider = ({ children }: MusicProviderProps) => {
     setPlaylists((prev) => [...prev, newPlaylist])
   }
 
+  const deletePlaylist = (playlistId: number) => {
+    setPlaylists((prev) =>
+      prev.filter((playlist) => playlist.id !== playlistId)
+    )
+  }
+
   const addSongToPlaylist = (playlistId: number, song: Song) => {
     setPlaylists((prev) =>
       prev.map((playlist) => {
@@ -188,6 +195,7 @@ export const MusicProvider = ({ children }: MusicProviderProps) => {
         setVolume,
         playlists,
         createPlaylist,
+        deletePlaylist,
         addSongToPlaylist,
       }}
     >
