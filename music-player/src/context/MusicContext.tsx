@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useState } from 'react'
 
-interface Song {
+type Song = {
   id: number
   title: string
   artist: string
@@ -67,8 +67,14 @@ const songs: Song[] = [
   },
 ]
 
+export type Playlist = {
+  id: number
+  name: string
+  songs: Song[]
+}
 interface MusicContextValue {
   allSongs: Song[]
+  setAllSongs: React.Dispatch<React.SetStateAction<Song[]>>
   handlePlaySong: (song: Song, index: number) => void
   currentTrack: Song
   currentTrackIndex: number
@@ -84,6 +90,9 @@ interface MusicContextValue {
   pause: () => void
   volume: number
   setVolume: React.Dispatch<React.SetStateAction<number>>
+  playlists: Playlist[]
+  createPlaylist: (name: string) => void
+  addSongToPlaylist: (playlistId: number, song: Song) => void
 }
 
 const MusicContext = createContext<MusicContextValue | undefined>(undefined)
@@ -100,6 +109,7 @@ export const MusicProvider = ({ children }: MusicProviderProps) => {
   const [duration, setDuration] = useState<number>(0)
   const [isPlaying, setIsPlaying] = useState<boolean>(false)
   const [volume, setVolume] = useState<number>(0.5)
+  const [playlists, setPlaylists] = useState<Playlist[]>([])
 
   const handlePlaySong = (song: Song, index: number) => {
     setCurrentTrack(song)
@@ -123,6 +133,28 @@ export const MusicProvider = ({ children }: MusicProviderProps) => {
       return nextIndex
     })
     setIsPlaying(false)
+  }
+
+  const createPlaylist = (name: string) => {
+    const newPlaylist = {
+      id: Date.now(),
+      name,
+      songs: [],
+    }
+
+    setPlaylists((prev) => [...prev, newPlaylist])
+  }
+
+  const addSongToPlaylist = (playlistId: number, song: Song) => {
+    setPlaylists((prev) =>
+      prev.map((playlist) => {
+        if (playlist.id === playlistId) {
+          return { ...playlist, songs: [...playlist.songs, song] }
+        } else {
+          return playlist
+        }
+      })
+    )
   }
 
   const play = () => setIsPlaying(true)
@@ -154,6 +186,9 @@ export const MusicProvider = ({ children }: MusicProviderProps) => {
         pause,
         volume,
         setVolume,
+        playlists,
+        createPlaylist,
+        addSongToPlaylist,
       }}
     >
       {children}

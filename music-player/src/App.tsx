@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router'
+import { Navbar } from './components/Navbar'
 import { AllSongs } from './components/AllSongs'
 import { MusicPlayer } from './components/MusicPlayer'
 import { PlayList } from './components/PlayList'
@@ -9,7 +10,7 @@ function App() {
     <BrowserRouter>
       <MusicProvider>
         <div className='app'>
-          {/* <Navbar /> */}
+          <Navbar />
           <main className='app-main'>
             <div className='player-section'>
               <MusicPlayer />
@@ -17,7 +18,7 @@ function App() {
             <div className='content-section'>
               <Routes>
                 <Route path='/' element={<AllSongs />} />
-                <Route path='/playlist' element={<PlayList />} />
+                <Route path='/playlists' element={<PlayList />} />
               </Routes>
             </div>
           </main>
