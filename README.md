@@ -15,3 +15,7 @@
 - Playlists - Create and manage custom playlists
 - Song Library - Browse all available songs
 - Context API - Global state management for music playlists
+
+### 3. Crypto Project
+
+- fetching data from API
