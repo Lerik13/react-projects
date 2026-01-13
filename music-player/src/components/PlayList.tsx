@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useMusic, type Playlist } from '../context/MusicContext'
+import { useMusic, type Playlist, type Song } from '../context/MusicContext'
 
 export const PlayList = () => {
   const [newPlaylistName, setNewPlaylistName] = useState<string>('')
@@ -9,7 +9,14 @@ export const PlayList = () => {
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [showDropDown, setShowDropDown] = useState<boolean>(false)
 
-  const { playlists, createPlaylist, allSongs, addSongToPlaylist } = useMusic()
+  const {
+    playlists,
+    createPlaylist,
+    allSongs,
+    addSongToPlaylist,
+    currentTrackIndex,
+    handlePlaySong,
+  } = useMusic()
 
   const filteredSongs = allSongs.filter((song) => {
     const matches =
@@ -30,12 +37,17 @@ export const PlayList = () => {
     }
   }
 
-  const handleAddSong = (song) => {
+  const handleAddSong = (song: Song) => {
     if (selectedPlaylist) {
       addSongToPlaylist(selectedPlaylist.id, song)
       setSearchQuery('')
       setShowDropDown(false)
     }
+  }
+
+  const handlePlayFromPlaylist = (song: Song) => {
+    const globalIndex = allSongs.findIndex((s) => s.id === song.id)
+    handlePlaySong(song, globalIndex)
   }
 
   return (
@@ -119,7 +131,16 @@ export const PlayList = () => {
                   <p className='empty-playlist'>No songs in this playlist</p>
                 ) : (
                   playlist.songs.map((song, key) => (
-                    <div key={key} className={`playlist-song`}>
+                    <div
+                      key={key}
+                      className={`playlist-song ${
+                        currentTrackIndex ===
+                        allSongs.findIndex((s) => s.id === song.id)
+                          ? 'active'
+                          : ''
+                      }`}
+                      onClick={() => handlePlayFromPlaylist(song)}
+                    >
                       <div className='song-info'>
                         <span className='song-title'>{song.title}</span>
                         <span className='song-artist'>{song.artist}</span>
