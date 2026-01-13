@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useContext, useState } from 'react'
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 
 export type Song = {
   id: number
@@ -104,6 +110,14 @@ interface MusicProviderProps {
 }
 
 export const MusicProvider = ({ children }: MusicProviderProps) => {
+  const getPlaylistsFromStorage = (): Playlist[] => {
+    const savedPlaylists = localStorage.getItem('musicPlayerPlaylists')
+    if (savedPlaylists) {
+      return JSON.parse(savedPlaylists)
+    }
+    return []
+  }
+
   const [allSongs, setAllSongs] = useState<Song[]>(songs)
   const [currentTrack, setCurrentTrack] = useState<Song>(songs[0])
   const [currentTrackIndex, setCurrentTrackIndex] = useState<number>(0)
@@ -111,7 +125,17 @@ export const MusicProvider = ({ children }: MusicProviderProps) => {
   const [duration, setDuration] = useState<number>(0)
   const [isPlaying, setIsPlaying] = useState<boolean>(false)
   const [volume, setVolume] = useState<number>(0.5)
-  const [playlists, setPlaylists] = useState<Playlist[]>([])
+  const [playlists, setPlaylists] = useState<Playlist[]>(
+    getPlaylistsFromStorage
+  )
+
+  useEffect(() => {
+    if (playlists.length > 0) {
+      localStorage.setItem('musicPlayerPlaylists', JSON.stringify(playlists))
+    } else {
+      localStorage.removeItem('musicPlayerPlaylists')
+    }
+  }, [playlists])
 
   const handlePlaySong = (song: Song, index: number) => {
     setCurrentTrack(song)
