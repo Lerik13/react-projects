@@ -9,3 +9,16 @@ export interface Crypto {
   market_cap: number
   total_volume: number
 }
+
+export interface Coin {
+  name: string
+  symbol: string
+  image: { thumb: string; small: string; large: string }
+  market_data: {
+    market_cap_rank: number
+    current_price: { usd: number }
+    price_change_percentage_24h: number
+    high_24h: { usd: number }
+    low_24h: { usd: number }
+  }
+}

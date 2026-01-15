@@ -77,7 +77,6 @@ export const Home = () => {
             <h1>🚀 Crypto Tracker</h1>
             <p>Real-time crypto-currency prices and market data</p>
           </div>
-          <div className='search-section'></div>
 
           <div className='search-section'>
             <input
