@@ -19,3 +19,4 @@
 ### 3. Crypto Project
 
 - fetching data from API
+- using ReCharts library for drawing graphic on Coin Page
