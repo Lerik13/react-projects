@@ -19,4 +19,8 @@
 ### 3. Crypto Project
 
 - fetching data from API
-- using ReCharts library for drawing graphic on Coin Page
+- Real-time Prices - Live cryptocurrency market data from CoinGecko API
+- Charts - Interactive 7-day price charts using Recharts
+- Coin Details - Detailed information for each cryptocurrency
+- Routing - Dynamic routes for individual coin pages
+- Market Data - Market cap, volume, and price changes
