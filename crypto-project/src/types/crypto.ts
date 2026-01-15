@@ -20,5 +20,9 @@ export interface Coin {
     price_change_percentage_24h: number
     high_24h: { usd: number }
     low_24h: { usd: number }
+    market_cap: { usd: number }
+    total_volume: { usd: number }
+    circulating_supply: string
+    total_supply: string
   }
 }

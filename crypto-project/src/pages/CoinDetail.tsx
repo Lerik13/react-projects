@@ -11,7 +11,7 @@ import {
 } from 'recharts'
 import { fetchChartData, fetchCoinData } from '../api/coinGecko'
 import type { Coin } from '../types/crypto'
-import { formatPrice } from '../utils/formatter'
+import { formatMarketCap, formatPrice } from '../utils/formatter'
 
 export const CoinDetail = () => {
   const { id } = useParams<string>()
@@ -174,6 +174,36 @@ export const CoinDetail = () => {
               />
             </LineChart>
           </ResponsiveContainer>
+        </div>
+
+        <div className='stats-grid'>
+          <div className='stat-card'>
+            <span className='stat-label'>Market Cap</span>
+            <span className='stat-value'>
+              ${formatMarketCap(coin.market_data.market_cap.usd)}
+            </span>
+          </div>
+
+          <div className='stat-card'>
+            <span className='stat-label'>Volume (24)</span>
+            <span className='stat-value'>
+              ${formatMarketCap(coin.market_data.total_volume.usd)}
+            </span>
+          </div>
+
+          <div className='stat-card'>
+            <span className='stat-label'>Circulating Supply</span>
+            <span className='stat-value'>
+              {coin.market_data.circulating_supply?.toLocaleString() || 'N/A'}
+            </span>
+          </div>
+
+          <div className='stat-card'>
+            <span className='stat-label'>Total Supply</span>
+            <span className='stat-value'>
+              {coin.market_data.total_supply?.toLocaleString() || 'N/A'}
+            </span>
+          </div>
         </div>
       </div>
     </div>
