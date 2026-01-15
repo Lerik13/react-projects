@@ -206,6 +206,10 @@ export const CoinDetail = () => {
           </div>
         </div>
       </div>
+
+      <footer className='footer'>
+        <p>Data provided by CoinGecko API</p>
+      </footer>
     </div>
   )
 }
