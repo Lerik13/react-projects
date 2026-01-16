@@ -24,3 +24,5 @@
 - Coin Details - Detailed information for each cryptocurrency
 - Routing - Dynamic routes for individual coin pages
 - Market Data - Market cap, volume, and price changes
+
+### 4. tailwind-react-project
