@@ -6,10 +6,10 @@ function App() {
 
   return (
     <div
-      className={`${theme} min-h-screen text-slate-900 dark:bg-slate-900 dark:text-white`}
+      className={`${theme} min-h-screen text-background dark:bg-background dark:text-primary`}
     >
       {/* Navbar */}
-      <div className='flex items-center justify-between text-slate-900 dark:bg-slate-900 dark:text-white p-4'>
+      <div className='flex items-center justify-between text-background dark:bg-background dark:text-primary p-4'>
         <div className='font-bold'>Logo</div>
 
         {/* Desktop Nav */}
@@ -37,7 +37,7 @@ function App() {
 
       {/* Mobile Nav */}
       {open && (
-        <div className='flex flex-col items-center gap-2 p-4 sm:hidden text-slate-900 dark:bg-slate-900 dark:text-white'>
+        <div className='flex flex-col items-center gap-2 p-4 sm:hidden text-background dark:bg-background dark:text-primary'>
           <span>Home</span>
           <span>About</span>
           <span>Contact</span>
@@ -52,7 +52,7 @@ function App() {
         </div>
       )}
 
-      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 text-center p-6 gap-6 text-2xl sm:text-lg text-slate-900 dark:bg-slate-900 text-white'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 text-center p-6 gap-6 text-2xl sm:text-lg text-background dark:bg-background text-primary'>
         <div className='bg-slate-500 p-4 rounded hover: bg-slate-600 hover:scale-110 transition-all duration-300'>
           Feature One
         </div>
