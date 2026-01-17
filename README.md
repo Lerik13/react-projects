@@ -26,3 +26,5 @@
 - Market Data - Market cap, volume, and price changes
 
 ### 4. tailwind-react-project
+
+- using Basics of Tailwind CSS
